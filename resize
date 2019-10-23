@@ -1,2 +1,2 @@
 #!/bin/bash
-python .SA_resize_stickers.py
+python SA_resize_stickers.py

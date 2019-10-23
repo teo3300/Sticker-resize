@@ -46,6 +46,22 @@ def SA_resize_stickers(file):
     img.save(new_image, quality=85)
     return new_image
     pass
+#######################################
+def createdir():
+    systemOS = getSystem()
+        if systemOS == "linux":
+            command = "mkdir "
+        elif systemOS == "windows":
+            command = "mkdir "
+        else:
+            print("ERROR: unknown system: '"+systemOS+"'")
+            exit()
+    import os
+    from os import system
+    input = command + 'input'
+    res = command + 'resized'
+    os.system(input)
+    os.system(resized)
 
 #######################################
 # Program sarts here #
@@ -55,7 +71,10 @@ import sys
 
 cwd = './input/'
 i=1
-t = len(os.listdir(cwd))
+try:
+    t = len(os.listdir(cwd))
+except:
+    creatdir()
 for file in os.listdir(cwd):
     print("Resizing {:3d} of {:3d}: {}".format(1,t,file))
     SA_resize_stickers(file)

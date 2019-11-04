@@ -4,13 +4,28 @@ def getSystem():
     print("System found: '"+system+"'")
     return system
     pass
+#######################################
+
+def cls():
+    systemOS = getSystem()
+    if systemOS == "linux":
+        command = "clear"
+    elif systemOS == "windows":
+        command = "cls"
+    else:
+        print("ERROR: unknown system: '"+systemOS+"'")
+        exit()
+    import os
+    from os import system
+    os.system(command)
+    pass
 
 #######################################
 
 def checkModule(moduleName):
     systemOS = getSystem()
     if systemOS == "linux":
-        command = "sudo pip install "+moduleName#+" > /dev/null"
+        command = "sudo pip3.7 install "+moduleName#+" > /dev/null"
     elif systemOS == "windows":
         command = "python -m pip install "+ moduleName+ " --user"
     else:
@@ -23,13 +38,7 @@ def checkModule(moduleName):
 
 #######################################
 
-def SA_resize_stickers(file):
-    try:
-        import PIL
-    except ImportError:
-        checkModule("Pillow")
-        import PIL
-    from PIL import Image
+def SA_resize_stickers(file, out):
 
     img = Image.open('./input/' + file)
 
@@ -42,26 +51,19 @@ def SA_resize_stickers(file):
         h = 512
         w = W * 512/H
     img = img.resize((int(w), int(h)), PIL.Image.ANTIALIAS)
-    new_image = './resized/resized-' + file + '.vbb.png'
+    new_image = './resized/resized-' + file + '-re' + out
     img.save(new_image, quality=85)
     return new_image
     pass
+
 #######################################
-def createdir():
-    systemOS = getSystem()
-        if systemOS == "linux":
-            command = "mkdir "
-        elif systemOS == "windows":
-            command = "mkdir "
-        else:
-            print("ERROR: unknown system: '"+systemOS+"'")
-            exit()
-    import os
-    from os import system
-    input = command + 'input'
-    res = command + 'resized'
-    os.system(input)
-    os.system(resized)
+
+try:
+    import PIL
+except ImportError:
+    checkModule("Pillow")
+    import PIL
+from PIL import Image
 
 #######################################
 # Program sarts here #
@@ -69,12 +71,19 @@ def createdir():
 import os
 import sys
 
+out=input("selezionare il formato di uscita:\n(1) png\n(2) webp\n\n\n")
+
+cls()
+
+if out == "1":
+    out = ".png"
+elif out == "2":
+    out = ".webp"
+
 cwd = './input/'
 i=1
-try:
-    t = len(os.listdir(cwd))
-except:
-    creatdir()
+t = len(os.listdir(cwd))
 for file in os.listdir(cwd):
-    print("Resizing {:3d} of {:3d}: {}".format(1,t,file))
-    SA_resize_stickers(file)
+    print("Resizing {:3d} of {:3d}: {}".format(i,t,file))
+    SA_resize_stickers(file, out)
+    i=i+1

@@ -1,9 +1,26 @@
 def getSystem():
     import platform
     system = platform.system().lower()
-    print("System found: '"+system+"'")
     return system
     pass
+
+#######################################
+
+def createdir(path):
+    systemOS = getSystem()
+    if systemOS == "linux":
+        command = "mkdir "
+    elif systemOS == "windows":
+        command = "md "
+    else:
+        print("ERROR: unknown system: '"+systemOS+"'")
+        exit()
+    import os
+    from os import system
+    dr = command + path
+    print('Missing "'+ path+'" folder, fixed')
+    os.system(dr)
+
 #######################################
 
 def cls():
@@ -71,8 +88,14 @@ from PIL import Image
 import os
 import sys
 
-out=input("selezionare il formato di uscita:\n(1) png\n(2) webp\n\n\n")
+cwd = './input'
+i=1
+if( not os.path.isdir('./resized')):
+    createdir("resized")
+if( not os.path.isdir('./input')):
+    createdir("input")
 
+out=input("\nPut your images inside the \"input\" folder and select the output format:\n[1]\tpng\n[2]\twebp\n\n\n")
 cls()
 
 if out == "1":
@@ -80,10 +103,9 @@ if out == "1":
 elif out == "2":
     out = ".webp"
 
-cwd = './input/'
-i=1
-t = len(os.listdir(cwd))
-for file in os.listdir(cwd):
-    print("Resizing {:3d} of {:3d}: {}".format(i,t,file))
+fold = os.listdir(cwd)
+l = len(fold)
+for file in fold:
+    print("Resizing {:6d} of {:6d}: {}".format(i,l,file))
     SA_resize_stickers(file, out)
     i=i+1

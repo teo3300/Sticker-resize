@@ -18,7 +18,7 @@ def createdir(path):
     import os
     from os import system
     dr = command + path
-    print('Missing "'+ path+'" folder, fixed')
+    print('"'+ path +'" directory created')
     os.system(dr)
 
 #######################################
@@ -106,6 +106,6 @@ elif out == "2":
 fold = os.listdir(cwd)
 l = len(fold)
 for file in fold:
-    print("Resizing {:6d} of {:6d}: {}".format(i,l,file))
+    print("Resizing {:4d} of {:4d}: {}".format(i,l,file))
     SA_resize_stickers(file, out)
     i=i+1

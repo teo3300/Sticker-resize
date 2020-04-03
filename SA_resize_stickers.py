@@ -4,16 +4,17 @@ def getSystem():
     return system
     pass
 
+sysOS = getSystem()
+
 #######################################
 
 def createdir(path):
-    systemOS = getSystem()
-    if systemOS == "linux":
+    if sysOS == "linux":
         command = "mkdir "
-    elif systemOS == "windows":
+    elif sysOS == "windows":
         command = "md "
     else:
-        print("ERROR: unknown system: '"+systemOS+"'")
+        print("ERROR: unknown system: '"+sysOS+"'")
         exit()
     import os
     from os import system
@@ -24,13 +25,12 @@ def createdir(path):
 #######################################
 
 def cls():
-    systemOS = getSystem()
-    if systemOS == "linux":
+    if sysOS == "linux":
         command = "clear"
-    elif systemOS == "windows":
+    elif sysOS == "windows":
         command = "cls"
     else:
-        print("ERROR: unknown system: '"+systemOS+"'")
+        print("ERROR: unknown system: '"+sysOS+"'")
         exit()
     import os
     from os import system
@@ -40,13 +40,12 @@ def cls():
 #######################################
 
 def checkModule(moduleName):
-    systemOS = getSystem()
-    if systemOS == "linux":
+    if sysOS == "linux":
         command = "sudo pip3.7 install "+moduleName#+" > /dev/null"
-    elif systemOS == "windows":
+    elif sysOS == "windows":
         command = "python -m pip install "+ moduleName+ " --user"
     else:
-        print("ERROR: unknown system: '"+systemOS+"'")
+        print("ERROR: unknown system: '"+sysOS+"'")
         exit()
     import os
     from os import system
@@ -88,6 +87,7 @@ from PIL import Image
 import os
 import sys
 
+
 cwd = './input'
 i=1
 if( not os.path.isdir('./resized')):
@@ -95,7 +95,10 @@ if( not os.path.isdir('./resized')):
 if( not os.path.isdir('./input')):
     createdir("input")
 
-out=input("\nPut your images inside the \"input\" folder and select the output format:\n[1]\tpng\n[2]\twebp\n\n\n")
+if not os.listdir(cwd):
+    print("WARNING: no input images, put your images inside the \"input\" folder before selecting the output format")
+
+out=input("\nSelect the output format:\n[1]\tpng\n[2]\twebp\n\n\n")
 cls()
 
 if out == "1":
@@ -105,7 +108,10 @@ elif out == "2":
 
 fold = os.listdir(cwd)
 l = len(fold)
+if not fold:
+    print("ERROR: no input image")
+    exit()
 for file in fold:
-    print("Resizing {:4d} of {:4d}: {}".format(i,l,file))
+    print("Resizing {:5d} of {:5d}: {}".format(i,l,file))
     SA_resize_stickers(file, out)
     i=i+1

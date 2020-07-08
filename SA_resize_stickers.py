@@ -1,3 +1,7 @@
+# accepted extentions
+
+ext=['png','jpg','webp','jfif']
+
 def getSystem():
     import platform
     system = platform.system().lower()
@@ -43,7 +47,7 @@ def checkModule(moduleName):
     if sysOS == "linux":
         command = "sudo pip3.7 install "+moduleName#+" > /dev/null"
     elif sysOS == "windows":
-        command = "pip install "+ moduleName
+        command = "python -m pip install "+ moduleName+ " --user"
     else:
         print("ERROR: unknown system: '"+sysOS+"'")
         exit()
@@ -107,11 +111,18 @@ else:
     out = ".webp"
 
 fold = os.listdir(cwd)
-l = len(fold)
-if not fold:
-    print("ERROR: no input image")
-    exit()
+images = []
+
 for file in fold:
-    print("Resizing {:5d} of {:5d}: {}".format(i,l,file))
-    SA_resize_stickers(file, out)
+    if file.split('.')[-1].lower() in ext:
+        images.append(file)
+l=len(images)
+    
+if not images:
+    input("\nERROR: no input image\npress ENTER to exit ")
+    exit()
+for image in images:
+    print("Resizing {:5d} of {:5d}: {}".format(i,l,image))
+    SA_resize_stickers(image, out)
     i=i+1
+input("\n" + str(l) + " file(s) converted\npress ENTER to exit ")

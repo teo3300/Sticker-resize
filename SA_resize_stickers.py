@@ -98,12 +98,12 @@ if( not os.path.isdir('./input')):
 if not os.listdir(cwd):
     print("WARNING: no input images, put your images inside the \"input\" folder before selecting the output format")
 
-out=input("\nSelect the output format:\n[1]\tpng\n[2]\twebp\n\n\n")
+out=input("\nSelect the output format:\n[1]\tpng\n[2]\twebp (default)\n\n\n")
 cls()
 
 if out == "1":
     out = ".png"
-elif out == "2":
+else:
     out = ".webp"
 
 fold = os.listdir(cwd)

@@ -43,7 +43,7 @@ def checkModule(moduleName):
     if sysOS == "linux":
         command = "sudo pip3.7 install "+moduleName#+" > /dev/null"
     elif sysOS == "windows":
-        command = "python -m pip install "+ moduleName+ " --user"
+        command = "pip install "+ moduleName
     else:
         print("ERROR: unknown system: '"+sysOS+"'")
         exit()
